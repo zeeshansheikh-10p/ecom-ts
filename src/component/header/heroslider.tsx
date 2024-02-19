@@ -6,29 +6,42 @@ import slideimage from '../../assets/images/banner/banner-img.png';
 import slideimage2 from '../../assets/images/banner/e-p1.png';
 
 function Heroslider() {
-    const [SelectedImage, setSelectedImage] = useState(slideimage);
-    const [AllImages, setAllImages] = useState([
+    const [currentImagePose,setCurrentImagePose] = useState(0)
+    const [allImages, setAllImages] = useState([
         {
             image: slideimage,
             title: 'Fancy Shoes',
-            subtitle: 'New Stock 1'
+            subtitle: 'New Stock 1',
         },
         {
             image: slideimage2,
             title: 'Casual Shoes',
-            subtitle: 'New Stock 2'
+            subtitle: 'New Stock 2',
+         
         },
         {
             image: slideimage,
             title: 'Nike Shoes',
-            subtitle: 'New Stock 3'
+            subtitle: 'New Stock 3',
+          
         },
         {
             image: slideimage2,
             title: 'Nike Shoes',
-            subtitle: 'New Stock 4'
+            subtitle: 'New Stock 4',
         }
     ])
+    const [SelectedImage, setSelectedImage] = useState(allImages[currentImagePose]);
+    console.log(allImages)
+    const onClickNext = ()=>{
+        if(currentImagePose+1>=allImages.length){
+            setCurrentImagePose(0)
+            setSelectedImage(allImages[currentImagePose])
+        }else{
+            setCurrentImagePose(currentImagePose+1)
+            setSelectedImage(allImages[currentImagePose])
+        }
+    }
 
   return (
     <Container fluid>
@@ -36,7 +49,7 @@ function Heroslider() {
             <Col>
             <div className='slidecontainer'>
                 <div className='slider'>
-                    <img src={SelectedImage} alt='slide' className='slideimage' />
+                    <img src={SelectedImage.image} alt='slide' className='slideimage' />
                     <h1>Hero Slider</h1>
                     <h4>Sub Title</h4>
                     
@@ -44,12 +57,12 @@ function Heroslider() {
                 <div className='slidethumb'>
                     
                     {
-                        AllImages.map((slidedata) => {
+                        allImages.map((slidedata) => {
                             return <>
                                 <div 
                                 className='thumb'
                                 onClick={()=>{
-                                    setSelectedImage(slidedata.image);
+                                    setSelectedImage(slidedata);
                                 }}
                                 ><img src={slidedata.image} /></div>
                             </>
@@ -61,7 +74,7 @@ function Heroslider() {
                     <button></button>
                     <button 
                         onClick={()=>{
-                            // setSelectedImage(AllImages)
+                            onClickNext()
                         }}
                     >Next</button>
                 </div>
